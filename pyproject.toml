@@ -1,0 +1,19 @@
+[project]
+name = "tigon"
+version = "0.1.0"
+description = "Trajectory Inference with Growth via Optimal transport and Neural network"
+authors = [{name = "Original authors"}]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=1.13",
+    "torchdiffeq>=0.2.3",
+    "scipy>=1.10",
+    "numpy>=1.23",
+    "matplotlib>=3.5",
+    "seaborn>=0.12",
+]
+
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
