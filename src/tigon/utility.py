@@ -466,6 +466,11 @@ def plot_jac_v(func,z_t,time_pt,title,gene_list,args,device):
         v_xt = func(torch.tensor(time_pt).type(torch.float32).to(device),(x_t,g_xt0, logp_diff_xt0))[0]
         jac = jac+Jacobian(v_xt, x_t).reshape(dim,dim).detach().cpu().numpy()
     jac = jac/z_t.shape[0]
+
+    max_abs = np.max(np.abs(jac))
+    jac = jac/max_abs
+
+    jac -= np.diag(np.diag(jac))
     
     fig = plt.figure(figsize=(5, 4), dpi=200)
     ax = fig.add_subplot(111)
@@ -473,13 +478,16 @@ def plot_jac_v(func,z_t,time_pt,title,gene_list,args,device):
     plt.axis('off')
     plt.margins(0, 0)
     ax.set_title('Jacobian of velocity')
-    sns.heatmap(jac,cmap="coolwarm",xticklabels=gene_list,yticklabels=gene_list)
+    sns.heatmap(jac,cmap="RdBu_r",xticklabels=gene_list,yticklabels=gene_list, vmax=1, vmin=-1, center=0)
     ax.set_xticks([])  # Remove x-axis tick marks
     ax.set_yticks([])  # Remove y-axis tick marks
     ax.axis('off')
-    #plt.savefig(os.path.join(args.save_dir, title),format="pdf",
-    #            pad_inches=0.2, bbox_inches='tight')
-    plt.show()
+    plt.gca().invert_yaxis()
+    print(jac)
+    plt.savefig(os.path.join(args.save_dir, title),format="pdf",
+               pad_inches=0.2, bbox_inches='tight')
+    # plt.show()
+    return jac
                 
 
 # plot avergae gradients of g of cells (z_t) at time (time_pt)

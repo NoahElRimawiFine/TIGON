@@ -1,6 +1,6 @@
 [project]
 name = "tigon"
-version = "0.1.2"
+version = "0.1.3"
 description = "Trajectory Inference with Growth via Optimal transport and Neural network"
 authors = [{name = "Original authors"}]
 readme = "README.md"
